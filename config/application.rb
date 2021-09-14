@@ -34,5 +34,12 @@ module Myapp
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.generators do |g|
+      g.assets false
+      g.helper false
+      g.factory_bot false
+      g.test_framework nil
+    end
   end
 end
