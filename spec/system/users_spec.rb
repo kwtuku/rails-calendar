@@ -25,4 +25,12 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content 'アカウント登録が完了しました。'
     end
   end
+
+  describe 'guest sign in' do
+    it 'signs in as guest user' do
+      visit root_path
+      click_link 'ゲストログイン'
+      expect(page).to have_content 'ゲストユーザーとしてログインしました。'
+    end
+  end
 end
