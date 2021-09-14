@@ -41,5 +41,8 @@ module Myapp
       g.factory_bot false
       g.test_framework nil
     end
+
+    config.i18n.default_locale = :ja
+    config.time_zone = 'Asia/Tokyo'
   end
 end
