@@ -202,6 +202,8 @@ GEM
     semantic_range (3.0.0)
     shoulda-matchers (5.0.0)
       activesupport (>= 5.2.0)
+    simple_calendar (2.4.3)
+      rails (>= 3.0)
     spring (3.0.0)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -258,6 +260,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   shoulda-matchers
+  simple_calendar
   spring
   turbolinks (~> 5)
   tzinfo-data
