@@ -1,0 +1,11 @@
+<section class="section">
+  <%= month_calendar(events: @events) do |date, events| %>
+    <%= date %>
+
+    <ul>
+      <% events.each do |event| %>
+        <li><%= event.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</section>
