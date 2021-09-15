@@ -1,4 +1,11 @@
 ja:
+  activerecord:
+    models:
+      event: 予定
+    attributes:
+      event:
+        name: 名前
+        start_time: 開始時刻
   simple_calendar:
     previous: "<"
     next: ">"
