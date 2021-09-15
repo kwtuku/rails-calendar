@@ -33,4 +33,19 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content 'ゲストユーザーとしてログインしました。'
     end
   end
+
+  describe 'destroy account' do
+    let(:alice) { create :user }
+
+    it 'destroys account' do
+      sign_in alice
+      click_link 'アカウント削除手続き'
+      expect(current_path).to eq users_confirm_destroy_path
+      fill_in 'user[current_password]', with: alice.password
+      expect{
+        click_button '削除'
+      }.to change { User.count }.by(-1)
+      expect(page).to have_content 'アカウントを削除しました。またのご利用をお待ちしております。'
+    end
+  end
 end
