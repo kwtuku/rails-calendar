@@ -1,14 +1,16 @@
-<%- if controller_name != 'sessions' %>
-  <%= link_to t(".sign_in"), new_session_path(resource_name) %><br />
-<% end %>
+<p class="has-text-centered my-4">または</p>
 
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to t(".sign_up"), new_registration_path(resource_name) %><br />
-<% end %>
+<%= link_to 'ゲストユーザーとしてログイン', users_guest_sign_in_path, method: :post, class: 'button is-fullwidth is-rounded is-info is-light mb-4' %>
 
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to t(".forgot_your_password"), new_password_path(resource_name) %><br />
+<div class="has-text-centered">
+  <%- if controller_name != 'sessions' %>
+    <%= link_to 'ログインはこちら', new_session_path(resource_name) %>
+  <% end %>
+
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <%= link_to 'アカウント登録はこちら', new_registration_path(resource_name) %>
 <% end %>
+</div>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
   <%= link_to t('.didn_t_receive_confirmation_instructions'), new_confirmation_path(resource_name) %><br />
