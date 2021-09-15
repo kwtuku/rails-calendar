@@ -1,0 +1,13 @@
+<% if model.errors.any? %>
+  <div class="notification is-danger is-light">
+    <button class="delete"></button>
+    <p>
+      <%= "エラーが発生したため入力された内容は保存されませんでした。" %>
+    </p>
+    <ul>
+      <% model.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -1,4 +1,8 @@
 <section class="section">
+  <div class="content">
+    <button class="button is-rounded is-info" id="show-events-new-modal">作成</button>
+  </div>
+
   <%= month_calendar(events: @events) do |date, events| %>
     <%= date %>
 
@@ -9,3 +13,37 @@
     </ul>
   <% end %>
 </section>
+
+<div class="modal" id="events-new-modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title is-4">予定を作成</p>
+      <button class="delete" id="close-events-new-modal" aria-label="close"></button>
+    </header>
+      <section class="modal-card-body">
+        <%= render 'shared/error_messages', model: @event %>
+
+        <div class="content">
+          <%= form_with model: @event, id: 'events-new-form' do |f| %>
+          <div class="field">
+            <%= f.label :name, class: 'label' %>
+            <div class="control">
+              <%= f.text_field  :name, required: true, class: 'input' %>
+            </div>
+          </div>
+
+          <div class="field">
+            <%= f.label :start_time, class: 'label' %>
+            <div class="control">
+              <%= f.datetime_field :start_time, required: true, class: 'input' %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </section>
+      <footer class="modal-card-foot is-flex is-justify-content-end">
+        <button class="button is-rounded is-info" type="submit" form="events-new-form">保存</button>
+      </footer>
+  </div>
+</div>

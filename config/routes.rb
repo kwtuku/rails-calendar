@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
   get 'users', to: 'home#index'
 
-  get 'events', to: 'events#index'
+  resources :events, only: %i(index create)
 
   root to: 'home#index'
 end
