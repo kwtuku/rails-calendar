@@ -4,5 +4,6 @@ Rails.application.routes.draw do
     get 'users/confirm_destroy', to: 'users/registrations#confirm_destroy'
     post 'users/guest_sign_in', to: 'users/sessions#guest_sign_in'
   end
+  get 'users', to: 'home#index'
   root to: 'home#index'
 end
