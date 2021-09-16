@@ -13,6 +13,19 @@ RSpec.describe 'Events', type: :system do
     end
   end
 
+  describe 'show event' do
+    let(:alice) { create :user }
+    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+
+    it 'shows the event', js: true do
+      sign_in alice
+      visit events_path
+      click_link href: event_path(event)
+      expect(page).to have_content event.name
+      expect(page).to have_content I18n.l(event.start_time, format: :long)
+    end
+  end
+
   describe 'create event' do
     let(:alice) { create :user }
     let(:event) { build_stubbed :event, start_time: DateTime.now }
@@ -31,5 +44,5 @@ RSpec.describe 'Events', type: :system do
       expect(page).to have_content event.name
       expect(page).to have_content I18n.l(event.start_time)
     end
-    end
+  end
 end

@@ -79,7 +79,7 @@ RSpec.describe 'Events', type: :request do
         sign_in alice
         event_params = attributes_for(:event, user: alice)
         post events_path, params: { event: event_params }
-        expect(response).to have_http_status 302
+        expect(response).to redirect_to events_path
       end
 
       it 'shows a flash message' do
@@ -96,6 +96,63 @@ RSpec.describe 'Events', type: :request do
           post events_path, params: { event: event_params }
         }.to change { Event.count }.by(1)
         .and change { alice.events.count }.by(1)
+      end
+    end
+  end
+
+  describe 'GET /events/:id' do
+    let(:alice) { create :user }
+    let(:bob) { create :user }
+    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+
+    context 'not signed in' do
+      it 'returns a 401 response' do
+        get event_path(event), xhr: true
+        expect(response).to have_http_status 401
+      end
+
+      it 'does not show the event' do
+        get event_path(event), xhr: true
+        expect(response.body).to_not include event.name
+        expect(response.body).to_not include I18n.l(event.start_time, format: :long)
+      end
+    end
+
+    context 'signed in' do
+      context 'as not correct user' do
+        it 'returns a 401 response' do
+          sign_in bob
+          get event_path(event), xhr: true
+          expect(response).to have_http_status 401
+        end
+
+        it 'shows a flash message' do
+          sign_in bob
+          get event_path(event), xhr: true
+          expect(flash[:alert]).to eq '権限がありません。'
+        end
+
+        it 'does not show the event' do
+          sign_in bob
+          get event_path(event), xhr: true
+          expect(response.body).to_not include event.name
+          expect(response.body).to_not include I18n.l(event.start_time, format: :long)
+        end
+      end
+
+      context 'as correct user' do
+        it 'returns a 200 response' do
+          sign_in alice
+          get event_path(event), xhr: true
+          expect(response).to have_http_status 200
+        end
+
+        it 'shows the event' do
+          sign_in alice
+          get event_path(event), xhr: true
+          expect(response.body).to include event.name
+          expect(response.body).to include I18n.l(event.start_time, format: :long)
+        end
       end
     end
   end

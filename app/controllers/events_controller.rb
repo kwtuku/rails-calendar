@@ -6,6 +6,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    redirect_to root_path, status: 401, alert: '権限がありません。' if current_user.id != @event.user_id
   end
 
   def create
