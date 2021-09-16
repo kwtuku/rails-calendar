@@ -19,6 +19,22 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+    @event = Event.find(params[:id])
+    redirect_to root_path, status: 401, alert: '権限がありません。' if current_user.id != @event.user_id
+  end
+
+  def update
+    @event = Event.find(params[:id])
+    if current_user.id != @event.user_id
+      redirect_to root_path, status: 401, alert: '権限がありません。'
+    elsif @event.update(event_params)
+      redirect_to events_path, notice: '予定を更新しました。'
+    else
+      render 'error'
+    end
+  end
+
   def destroy
     @event = Event.find(params[:id])
     if current_user.id != @event.user_id

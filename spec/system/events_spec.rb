@@ -46,6 +46,24 @@ RSpec.describe 'Events', type: :system do
     end
   end
 
+  describe 'update event' do
+    let(:alice) { create :user }
+    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+
+    it 'creates event', js: true do
+      old_event_name = event.name
+      sign_in alice
+      visit events_path
+      click_link href: event_path(event)
+      click_link href: edit_event_path(event)
+      expect(page).to have_content old_event_name
+      fill_in 'event[name]', with: 'new event name'
+      click_button '更新'
+      expect(page).to have_content '予定を更新しました。'
+      expect(event.reload.name).to_not eq old_event_name
+    end
+  end
+
   describe 'destroy event' do
     let(:alice) { create :user }
     let!(:event) { create :event, start_time: DateTime.now, user: alice }

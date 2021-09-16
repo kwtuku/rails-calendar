@@ -157,6 +157,186 @@ RSpec.describe 'Events', type: :request do
     end
   end
 
+  describe 'GET /events/:id/edit' do
+    let(:alice) { create :user }
+    let(:bob) { create :user }
+    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+
+    context 'not signed in' do
+      it 'returns a 401 response' do
+        get edit_event_path(event), xhr: true
+        expect(response).to have_http_status 401
+      end
+
+      it 'shows a flash message' do
+        get edit_event_path(event), xhr: true
+        expect(response.body).to eq 'アカウント登録もしくはログインしてください。'
+      end
+
+      it 'does not show event' do
+        get edit_event_path(event), xhr: true
+        expect(response.body).to_not include event.name
+        expect(response.body).to_not include I18n.l(event.start_time, format: :input_value)
+      end
+    end
+
+    context 'signed in' do
+      context 'as not correct user' do
+        it 'returns a 401 response' do
+          sign_in bob
+          get edit_event_path(event), xhr: true
+          expect(response).to have_http_status 401
+        end
+
+        it 'shows a flash message' do
+          sign_in bob
+          get edit_event_path(event), xhr: true
+          expect(flash[:alert]).to eq '権限がありません。'
+        end
+
+        it 'does not show event' do
+          sign_in bob
+          get edit_event_path(event), xhr: true
+          expect(response.body).to_not include event.name
+          expect(response.body).to_not include I18n.l(event.start_time, format: :input_value)
+        end
+      end
+
+      context 'as correct user' do
+        it 'returns a 200 response' do
+          sign_in alice
+          get edit_event_path(event), xhr: true
+          expect(response).to have_http_status 200
+        end
+
+        it 'shows form' do
+          sign_in alice
+          get edit_event_path(event), xhr: true
+          expect(response.body).to include 'events-form-modal'
+        end
+
+        it 'shows event' do
+          sign_in alice
+          get edit_event_path(event), xhr: true
+          expect(response.body).to include event.name
+          expect(response.body).to include I18n.l(event.start_time, format: :input_value)
+        end
+      end
+    end
+  end
+
+  describe 'PUT /events/:id' do
+    let(:alice) { create :user }
+    let(:bob) { create :user }
+    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+
+    context 'not signed in' do
+      it 'returns a 401 response' do
+        event_params = attributes_for(:event)
+        put event_path(event), params: { event: event_params }, xhr: true
+        expect(response).to have_http_status 401
+      end
+
+      it 'shows a flash message' do
+        event_params = attributes_for(:event)
+        put event_path(event), params: { event: event_params }, xhr: true
+        expect(response.body).to eq 'アカウント登録もしくはログインしてください。'
+      end
+
+      it 'does not update the event' do
+        old_event_name = event.name
+        old_event_start_time = event.start_time.to_s
+        event_params = attributes_for(:event)
+        put event_path(event), params: { event: event_params }, xhr: true
+        expect(event.reload.name).to eq old_event_name
+        expect(event.reload.start_time.to_s).to eq old_event_start_time
+      end
+    end
+
+    context 'signed in' do
+      context 'as not correct user' do
+        it 'returns a 200 response' do
+          sign_in bob
+          event_params = attributes_for(:event)
+          put event_path(event), params: { event: event_params }, xhr: true
+          expect(response).to have_http_status 200
+        end
+
+        it 'shows a flash message' do
+          sign_in bob
+          event_params = attributes_for(:event)
+          put event_path(event), params: { event: event_params }, xhr: true
+          expect(flash[:alert]).to eq '権限がありません。'
+        end
+
+        it 'does not update the event' do
+          old_event_name = event.name
+          old_event_start_time = event.start_time.to_s
+          sign_in bob
+          event_params = attributes_for(:event)
+          put event_path(event), params: { event: event_params }, xhr: true
+          expect(event.reload.name).to eq old_event_name
+          expect(event.reload.start_time.to_s).to eq old_event_start_time
+        end
+      end
+
+      context 'as correct user' do
+        context 'with invalid attributes' do
+          it 'returns a 200 response' do
+            sign_in alice
+            invalid_event_params = attributes_for(:event, name: '', start_time: '')
+            put event_path(event), params: { event: invalid_event_params }, xhr: true
+            expect(response).to have_http_status 200
+          end
+
+          it 'shows error messages' do
+            sign_in alice
+            invalid_event_params = attributes_for(:event, name: '', start_time: '')
+            put event_path(event), params: { event: invalid_event_params }, xhr: true
+            expect(response.body).to include '名前を入力してください'
+            expect(response.body).to include '開始時刻を入力してください'
+          end
+
+          it 'does not update the event' do
+            old_event_name = event.name
+            old_event_start_time = event.start_time.to_s
+            sign_in alice
+            invalid_event_params = attributes_for(:event, name: '', start_time: '')
+            put event_path(event), params: { event: invalid_event_params }, xhr: true
+            expect(event.reload.name).to eq old_event_name
+            expect(event.reload.start_time.to_s).to eq old_event_start_time
+          end
+        end
+
+        context 'with valid attributes' do
+          it 'returns a 200 response' do
+            sign_in alice
+            event_params = attributes_for(:event)
+            put event_path(event), params: { event: event_params }, xhr: true
+            expect(response).to have_http_status 200
+          end
+
+          it 'redirects to events_path' do
+            sign_in alice
+            event_params = attributes_for(:event)
+            put event_path(event), params: { event: event_params }, xhr: true
+            expect(response).to redirect_to events_path
+          end
+
+          it 'updates the event' do
+            old_event_name = event.name
+            old_event_start_time = event.start_time.to_s
+            sign_in alice
+            event_params = attributes_for(:event)
+            put event_path(event), params: { event: event_params }, xhr: true
+            expect(event.reload.name).to_not eq old_event_name
+            expect(event.reload.start_time.to_s).to_not eq old_event_start_time
+          end
+        end
+      end
+    end
+  end
+
   describe 'DELETE /events/:id' do
     let(:alice) { create :user }
     let(:bob) { create :user }

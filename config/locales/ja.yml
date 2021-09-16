@@ -10,6 +10,7 @@ ja:
     formats:
       default: "%-H:%M"
       long: "%-m月%-d日(%a) %-H:%M"
+      input_value: "%Y-%m-%dT%H:%M:%S"
   simple_calendar:
     previous: "<"
     next: ">"
