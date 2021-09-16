@@ -1,14 +1,12 @@
 <section class="section">
-  <div class="content">
-    <button class="button is-rounded is-info" id="show-events-new-modal">作成</button>
-  </div>
-
   <%= month_calendar(events: @events) do |date, events| %>
-    <%= date %>
+    <p class="has-text-centered">
+      <%= date.day %>
+    </p>
 
     <ul>
       <% events.each do |event| %>
-        <li class="text-break is-1-line"><span><%= event.name %></span></li>
+        <li class="text-break is-1-line"><span><%= l event.start_time %> <%= event.name %></span></li>
       <% end %>
     </ul>
   <% end %>

@@ -25,15 +25,23 @@
 }
 
 .text-break {
-	word-break: break-word;
+  word-break: break-word;
 }
 
 .is-1-line {
   overflow: hidden;
   width: 100%;
   span {
-		display: -webkit-box;
+    display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
   }
+}
+
+.today {
+  background: hsl(219, 70%, 96%) !important;
+}
+
+.prev-month, .next-month {
+  background: none !important;
 }

@@ -6,6 +6,9 @@ ja:
       event:
         name: 名前
         start_time: 開始時刻
+  time:
+    formats:
+      default: "%H:%M"
   simple_calendar:
     previous: "<"
     next: ">"

@@ -1,15 +1,44 @@
 <div class="simple-calendar">
-  <div class="calendar-heading">
-    <%= link_to t('simple_calendar.previous', default: 'Previous'), calendar.url_for_previous_view %>
-    <span class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
-    <%= link_to t('simple_calendar.next', default: 'Next'), calendar.url_for_next_view %>
+  <div class="calendar-heading mb-3 is-flex is-justify-content-space-between is-align-items-center">
+    <div>
+      <span class="calendar-title title is-size-4 mb-0"><%= "#{start_date.year}年" %> <%= t('date.month_names')[start_date.month] %></span>
+      <%= link_to calendar.url_for_previous_view, title: '前の月を表示する' do %>
+        <span class="icon has-text-black">
+          <i class="fas fa-chevron-left"></i>
+        </span>
+      <% end %>
+      <%= link_to calendar.url_for_next_view, title: '次の月を表示する' do %>
+        <span class="icon has-text-black">
+          <i class="fas fa-chevron-right"></i>
+        </span>
+      <% end %>
+    </div>
+
+    <div class="is-flex">
+      <%= link_to '今日', events_path, class: 'button is-rounded' %>
+
+      <%= form_with url: events_path, method: :get, class: 'ml-6' do |f| %>
+        <div class="field has-addons">
+          <div class="control">
+            <%= f.date_field :start_date, required: true, class: 'input is-rounded' %>
+          </div>
+          <div class="control">
+            <%= f.submit 'に移動', name: nil, class: 'button is-rounded' %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if controller.controller_name == 'events' %>
+        <button class="button is-rounded is-info ml-6" id="show-events-new-modal">作成</button>
+      <% end %>
+    </div>
   </div>
 
   <table class="table table-striped">
     <thead>
       <tr>
         <% date_range.slice(0, 7).each do |day| %>
-          <th><%= t('date.abbr_day_names')[day.wday] %></th>
+          <th class="has-text-centered"><%= t('date.abbr_day_names')[day.wday] %></th>
         <% end %>
       </tr>
     </thead>
