@@ -45,4 +45,21 @@ RSpec.describe 'Events', type: :system do
       expect(page).to have_content I18n.l(event.start_time)
     end
   end
+
+  describe 'destroy event' do
+    let(:alice) { create :user }
+    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+
+    it 'creates event', js: true do
+      expect(alice.events.count).to eq 1
+      sign_in alice
+      visit events_path
+      click_link href: event_path(event)
+      destroy_link = find('.rspec_destroy_event')
+      destroy_link.click
+      page.accept_confirm
+      expect(page).to have_content '予定を削除しました。'
+      expect(alice.events.count).to eq 0
+    end
+  end
 end

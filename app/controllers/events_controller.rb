@@ -19,6 +19,16 @@ class EventsController < ApplicationController
     end
   end
 
+  def destroy
+    @event = Event.find(params[:id])
+    if current_user.id != @event.user_id
+      redirect_to root_path, status: 401, alert: '権限がありません。'
+    else
+      @event.destroy
+      redirect_to events_url, notice: '予定を削除しました。'
+    end
+  end
+
   private
     def event_params
       params.require(:event).permit(:name, :start_time)

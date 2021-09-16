@@ -8,5 +8,8 @@
     <section class="modal-card-body">
       <%= l event.start_time, format: :long %>
     </section>
+    <footer class="modal-card-foot is-flex is-justify-content-end">
+      <%= link_to '削除', event_path(event), method: :delete, data: { confirm: '本当に予定を削除しますか？一度削除すると、復元することはできません。' }, class: 'button rspec_destroy_event' %>
+    </footer>
   </div>
 </div>
