@@ -6,7 +6,11 @@
 
     <ul>
       <% events.each do |event| %>
-        <li class="text-break is-1-line"><span><%= l event.start_time %> <%= event.name %></span></li>
+        <%= link_to event_path(event), remote: true do %>
+          <li class="text-break is-1-line has-text-black" title="<%= event.name %>">
+            <span><%= l event.start_time %> <%= event.name %></span>
+          </li>
+        <% end %>
       <% end %>
     </ul>
   <% end %>

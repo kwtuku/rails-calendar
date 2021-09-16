@@ -1,0 +1,26 @@
+document.querySelectorAll("[id^='events-show-']").forEach((modal) => {
+  modal.remove();
+})
+
+var body = document.querySelector('body');
+var html = document.querySelector('html');
+
+body.insertAdjacentHTML('beforeend', '<%= j(render partial: "event", locals: { event: @event }) %>');
+html.classList.add('is-clipped');
+body.classList.add('mr-4');
+
+var eventsShowModal = document.getElementById('events-show-<%= @event.id %>-modal')
+
+var eventsShowModalCloseButton = eventsShowModal.querySelector('#close-events-show-<%= @event.id %>-modal');
+eventsShowModalCloseButton.addEventListener('click', () => {
+  eventsShowModal.classList.remove('is-active');
+  html.classList.remove('is-clipped');
+  body.classList.remove('mr-4');
+});
+
+var eventsShowModalBg = eventsShowModal.querySelector('.modal-background');
+eventsShowModalBg.addEventListener('click', () => {
+  eventsShowModal.classList.remove('is-active');
+  html.classList.remove('is-clipped');
+  body.classList.remove('mr-4');
+});
