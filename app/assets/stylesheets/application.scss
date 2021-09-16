@@ -42,6 +42,11 @@
   width: 95% !important;
 }
 
+.hover-has-background-light:hover {
+  background-color: hsl(0, 0%, 96%);
+  border-radius: 4px;
+}
+
 .today {
   background: hsl(219, 70%, 96%) !important;
 }
