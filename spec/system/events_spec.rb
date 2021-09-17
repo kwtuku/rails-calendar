@@ -37,6 +37,8 @@ RSpec.describe 'Events', type: :system do
       click_button '作成'
       fill_in 'event[name]', with: event.name
       fill_in 'event[start_time]', with: event.start_time
+      fill_in 'event[end_time]', with: event.end_time
+      fill_in 'event[description]', with: event.description
       expect{
         click_button '保存'
       }.to change { Event.count }.by(1)
