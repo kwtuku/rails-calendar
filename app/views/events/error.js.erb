@@ -9,3 +9,19 @@ var html = document.querySelector('html');
 eventsFormModal.classList.add('is-active');
 html.classList.add('is-clipped');
 body.classList.add('mr-4');
+
+<% if @event.errors[:name].any? %>
+  eventsFormModal.querySelector('#event_name').classList.add('border-danger');
+<% end %>
+
+<% if @event.errors[:start_time].any? %>
+  eventsFormModal.querySelector('#event_start_time').classList.add('border-danger');
+<% end %>
+
+<% if @event.errors[:end_time].any? %>
+  eventsFormModal.querySelector('#event_end_time').classList.add('border-danger');
+<% end %>
+
+<% if @event.errors[:description].any? %>
+  eventsFormModal.querySelector('#event_description').classList.add('border-danger');
+<% end %>

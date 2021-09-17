@@ -16,7 +16,7 @@
           <div class="field">
             <%= f.label :email, class: 'label' %>
             <div class="control">
-              <%= f.email_field :email, autocomplete: 'email', required: true, class: 'input' %>
+              <%= f.email_field :email, autocomplete: 'email', required: true, class: 'input border-danger-with-error' %>
             </div>
           </div>
 
@@ -26,7 +26,7 @@
           </div>
           <div class="field">
             <div class="control is-expanded">
-              <%= f.password_field :password, autocomplete: 'new-password', required: true, minlength: @minimum_password_length, maxlength: '128', class: 'input' %>
+              <%= f.password_field :password, autocomplete: 'new-password', required: true, minlength: @minimum_password_length, maxlength: '128', class: 'input border-danger-with-error' %>
             </div>
           </div>
 
@@ -35,7 +35,7 @@
           </div>
           <div class="field">
             <div class="control is-expanded">
-              <%= f.password_field :password_confirmation, autocomplete: 'new-password', required: true, minlength: @minimum_password_length, maxlength: '30', class: 'input' %>
+              <%= f.password_field :password_confirmation, autocomplete: 'new-password', required: true, minlength: @minimum_password_length, maxlength: '30', class: 'input border-danger-with-error' %>
             </div>
           </div>
 
