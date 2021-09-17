@@ -2,15 +2,21 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p class="modal-card-title text-break is-1-line w-95-per" title="<%= event.name %>"><span><%= event.name %></span></p>
+      <p class="modal-card-title text-break is-1-line w-95-per line-height-unset" title="<%= event.name %>"><span><%= event.name %></span></p>
       <button class="delete" id="close-events-show-<%= event.id %>-modal" aria-label="close"></button>
     </header>
     <section class="modal-card-body">
-      <%= l event.start_time, format: :long %>
+      <div class="content text-break">
+        <p>
+          <%= show_time(event.start_time, event.end_time) %>
+        </p>
+        <p><%= event.description %></p>
+      </div>
     </section>
     <footer class="modal-card-foot is-flex is-justify-content-end">
       <%= link_to '編集', edit_event_path(event), remote: true, class: 'button is-rounded is-info' %>
       <%= link_to '削除', event_path(event), method: :delete, data: { confirm: '本当に予定を削除しますか？一度削除すると、復元することはできません。' }, class: 'button is-rounded rspec_destroy_event' %>
+      <%= link_to '複製', duplicate_event_path(event), remote: true, class: 'button is-rounded' %>
     </footer>
   </div>
 </div>

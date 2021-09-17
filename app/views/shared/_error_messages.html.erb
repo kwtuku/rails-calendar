@@ -5,7 +5,7 @@
       <%= "エラーが発生したため入力された内容は保存されませんでした。" %>
     </p>
     <ul>
-      <% model.errors.full_messages.each do |message| %>
+      <% model.errors.full_messages.uniq.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>

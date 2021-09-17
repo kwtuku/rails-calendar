@@ -21,7 +21,7 @@ RSpec.describe 'Events', type: :request do
 
     context 'signed in' do
       let(:alice) { create :user }
-      let!(:event) { create :event, start_time: DateTime.now, user: alice }
+      let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
       it 'returns a 200 response' do
         sign_in alice
@@ -103,7 +103,7 @@ RSpec.describe 'Events', type: :request do
   describe 'GET /events/:id' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
     context 'not signed in' do
       it 'returns a 401 response' do
@@ -160,7 +160,7 @@ RSpec.describe 'Events', type: :request do
   describe 'GET /events/:id/edit' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
     context 'not signed in' do
       it 'returns a 401 response' do
@@ -228,7 +228,7 @@ RSpec.describe 'Events', type: :request do
   describe 'PUT /events/:id' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
     context 'not signed in' do
       it 'returns a 401 response' do
@@ -340,7 +340,7 @@ RSpec.describe 'Events', type: :request do
   describe 'DELETE /events/:id' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
     context 'not signed in' do
       it 'returns a 302 response' do
@@ -408,6 +408,74 @@ RSpec.describe 'Events', type: :request do
             delete event_path(event)
           }.to change { Event.count }.by(-1)
           .and change { alice.events.count }.by(-1)
+        end
+      end
+    end
+  end
+
+  describe 'GET /events/:id/duplicate' do
+    let(:alice) { create :user }
+    let(:bob) { create :user }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
+
+    context 'not signed in' do
+      it 'returns a 401 response' do
+        get duplicate_event_path(event), xhr: true
+        expect(response).to have_http_status 401
+      end
+
+      it 'shows a flash message' do
+        get duplicate_event_path(event), xhr: true
+        expect(response.body).to eq 'アカウント登録もしくはログインしてください。'
+      end
+
+      it 'does not show event' do
+        get duplicate_event_path(event), xhr: true
+        expect(response.body).to_not include event.name
+        expect(response.body).to_not include I18n.l(event.start_time, format: :input_value)
+      end
+    end
+
+    context 'signed in' do
+      context 'as not correct user' do
+        it 'returns a 401 response' do
+          sign_in bob
+          get duplicate_event_path(event), xhr: true
+          expect(response).to have_http_status 401
+        end
+
+        it 'shows a flash message' do
+          sign_in bob
+          get duplicate_event_path(event), xhr: true
+          expect(flash[:alert]).to eq '権限がありません。'
+        end
+
+        it 'does not show event' do
+          sign_in bob
+          get duplicate_event_path(event), xhr: true
+          expect(response.body).to_not include event.name
+          expect(response.body).to_not include I18n.l(event.start_time, format: :input_value)
+        end
+      end
+
+      context 'as correct user' do
+        it 'returns a 200 response' do
+          sign_in alice
+          get duplicate_event_path(event), xhr: true
+          expect(response).to have_http_status 200
+        end
+
+        it 'shows form' do
+          sign_in alice
+          get duplicate_event_path(event), xhr: true
+          expect(response.body).to include 'events-form-modal'
+        end
+
+        it 'shows event' do
+          sign_in alice
+          get duplicate_event_path(event), xhr: true
+          expect(response.body).to include event.name
+          expect(response.body).to include I18n.l(event.start_time, format: :input_value)
         end
       end
     end
