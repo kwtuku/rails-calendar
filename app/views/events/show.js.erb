@@ -5,7 +5,7 @@ document.querySelectorAll("[id^='events-show-']").forEach((modal) => {
 var body = document.querySelector('body');
 var html = document.querySelector('html');
 
-body.insertAdjacentHTML('beforeend', '<%= j(render partial: "event", locals: { event: @event }) %>');
+body.insertAdjacentHTML('beforeend', '<%= j(render "event", event: @event) %>');
 html.classList.add('is-clipped');
 body.classList.add('mr-4');
 
