@@ -14,8 +14,13 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to events_path, notice: '予定を保存しました。'
     else
-      @events = current_user.events.all
-      render :index
+      respond_to do |format|
+        format.html do
+          @events = current_user.events.all
+          render :index
+        end
+        format.js { render 'error' }
+      end
     end
   end
 
@@ -43,6 +48,12 @@ class EventsController < ApplicationController
       @event.destroy
       redirect_to events_url, notice: '予定を削除しました。'
     end
+  end
+
+  def duplicate
+    @original_event = Event.find(params[:id])
+    redirect_to root_path, status: 401, alert: '権限がありません。' if current_user.id != @original_event.user_id
+    @event = Event.new
   end
 
   private

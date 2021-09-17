@@ -16,4 +16,20 @@ module ApplicationHelper
       "#{l start_time, format: :long}~#{l end_time, format: :long}"
     end
   end
+
+  def form_modal_title
+    if controller.action_name == 'edit'
+      '予定を編集'
+    else
+      '予定を複製'
+    end
+  end
+
+  def submit_button_text
+    if controller.action_name == 'edit'
+      '更新'
+    else
+      '保存'
+    end
+  end
 end

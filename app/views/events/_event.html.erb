@@ -16,6 +16,7 @@
     <footer class="modal-card-foot is-flex is-justify-content-end">
       <%= link_to '編集', edit_event_path(event), remote: true, class: 'button is-rounded is-info' %>
       <%= link_to '削除', event_path(event), method: :delete, data: { confirm: '本当に予定を削除しますか？一度削除すると、復元することはできません。' }, class: 'button is-rounded rspec_destroy_event' %>
+      <%= link_to '複製', duplicate_event_path(event), remote: true, class: 'button is-rounded' %>
     </footer>
   </div>
 </div>

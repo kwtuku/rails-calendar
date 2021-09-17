@@ -1,0 +1,41 @@
+var eventsShowModal = document.getElementById('events-show-<%= @original_event.id %>-modal')
+var body = document.querySelector('body');
+var html = document.querySelector('html');
+
+if (eventsShowModal) {
+  eventsShowModal.classList.remove('is-active');
+  html.classList.remove('is-clipped');
+  body.classList.remove('mr-4');
+}
+
+var eventsFormModal = document.getElementById('events-form-modal')
+if (eventsFormModal) {
+  eventsFormModal.remove();
+}
+
+body.insertAdjacentHTML('beforeend', '<%= j(render "form", event: @event) %>');
+
+var eventsFormModal = document.getElementById('events-form-modal')
+
+eventsFormModal.querySelector('#event_name').value = "<%= @original_event.name %>";
+eventsFormModal.querySelector('#event_start_time').value = "<%= l(@original_event.start_time, format: :input_value) %>";
+eventsFormModal.querySelector('#event_end_time').value = "<%= l(@original_event.end_time, format: :input_value) %>";
+eventsFormModal.querySelector('#event_description').value = "<%= @original_event.description %>";
+
+eventsFormModal.classList.add('is-active');
+html.classList.add('is-clipped');
+body.classList.add('mr-4');
+
+var eventsFormModalCloseButton = eventsFormModal.querySelector('#close-events-form-modal');
+eventsFormModalCloseButton.addEventListener('click', () => {
+  eventsFormModal.classList.remove('is-active');
+  html.classList.remove('is-clipped');
+  body.classList.remove('mr-4');
+});
+
+var eventsFormModalBg = eventsFormModal.querySelector('.modal-background');
+eventsFormModalBg.addEventListener('click', () => {
+  eventsFormModal.classList.remove('is-active');
+  html.classList.remove('is-clipped');
+  body.classList.remove('mr-4');
+});

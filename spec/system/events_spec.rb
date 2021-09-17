@@ -83,4 +83,26 @@ RSpec.describe 'Events', type: :system do
       expect(alice.events.count).to eq 0
     end
   end
+
+  describe 'duplicate event' do
+    let(:alice) { create :user }
+    let!(:original_event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
+
+    it 'duplicates event', js: true do
+      original_event_name = original_event.name
+      expect(alice.events.count).to eq 1
+      sign_in alice
+      visit events_path
+      click_link href: event_path(original_event)
+      click_link href: duplicate_event_path(original_event)
+      expect(page).to have_content original_event_name
+      fill_in 'event[name]', with: 'not original event name'
+      fill_in 'event[start_time]', with: DateTime.now
+      fill_in 'event[end_time]', with: DateTime.now + 1.hour
+      click_button '保存'
+      expect(page).to have_content '予定を保存しました。'
+      expect(alice.events.count).to eq 2
+      expect(original_event.reload.name).to eq original_event_name
+    end
+  end
 end

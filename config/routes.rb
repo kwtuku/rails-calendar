@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   end
   get 'users', to: 'home#index'
 
-  resources :events, only: %i(index show create edit update destroy)
+  resources :events, only: %i(index show create edit update destroy) do
+    member do
+      get 'duplicate'
+    end
+  end
 
   root to: 'home#index'
 end
