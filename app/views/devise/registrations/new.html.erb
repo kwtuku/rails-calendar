@@ -24,19 +24,33 @@
             <%= f.label :password, class: 'label mb-0' %>
             <p class='help has-text-dark'><%= "#{t('devise.shared.minimum_password_length', count: @minimum_password_length)}の" if @minimum_password_length %>半角英数記号</p>
           </div>
-          <div class="field">
+          <div class="field is-grouped js-password-area">
             <div class="control is-expanded">
               <%= f.password_field :password, autocomplete: 'new-password', required: true, minlength: @minimum_password_length, maxlength: '128', class: 'input border-danger-with-error' %>
             </div>
+            <p class="control js-handle-password-mask">
+              <button class="button" title="パスワードを表示する" onclick="return false;">
+                <span class="icon is-small">
+                  <i class="far fa-eye-slash"></i>
+                </span>
+              </button>
+            </p>
           </div>
 
           <div class="field">
             <%= f.label :password_confirmation, class: 'label' %>
           </div>
-          <div class="field">
+          <div class="field is-grouped js-password-area">
             <div class="control is-expanded">
-              <%= f.password_field :password_confirmation, autocomplete: 'new-password', required: true, minlength: @minimum_password_length, maxlength: '30', class: 'input border-danger-with-error' %>
+              <%= f.password_field :password_confirmation, autocomplete: 'new-password', required: true, minlength: @minimum_password_length, maxlength: '128', class: 'input border-danger-with-error' %>
             </div>
+            <p class="control js-handle-password-mask">
+              <button class="button" title="パスワードを表示する" onclick="return false;">
+                <span class="icon is-small">
+                  <i class="far fa-eye-slash"></i>
+                </span>
+              </button>
+            </p>
           </div>
 
           <div class="field">
