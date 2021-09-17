@@ -42,3 +42,11 @@ guest_user.events.create!(
   start_time: randomized_time,
   end_time: randomized_time + 2.days,
 )
+
+randomized_time = Random.rand(start_day..last_day) + rand(24).hour + rand(60).minutes
+guest_user.events.create!(
+  name: 'a'*255,
+  description: 'a'*2000,
+  start_time: randomized_time,
+  end_time: randomized_time + rand(24).hours,
+)

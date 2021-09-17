@@ -1,5 +1,5 @@
 <section class="section">
-  <%= month_calendar(events: @events) do |date, events| %>
+  <%= month_calendar(events: @events, attribute: :start_time, end_attribute: :end_time) do |date, events| %>
     <p class="has-text-centered">
       <%= date.day %>
     </p>
@@ -8,7 +8,7 @@
       <% events.each do |event| %>
         <%= link_to event_path(event), remote: true do %>
           <li class="text-break is-1-line has-text-black hover-has-background-light mb-1" title="<%= event.name %>">
-            <span><%= l event.start_time %> <%= event.name %></span>
+            <span><%= start_time_or_end_time(date.day, event.start_time, event.end_time) %> <%= event.name %></span>
           </li>
         <% end %>
       <% end %>

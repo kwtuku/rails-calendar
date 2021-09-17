@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Events', type: :system do
   describe 'show events' do
     let(:alice) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
     it 'shows events' do
       sign_in alice
@@ -15,14 +15,15 @@ RSpec.describe 'Events', type: :system do
 
   describe 'show event' do
     let(:alice) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
     it 'shows the event', js: true do
       sign_in alice
       visit events_path
       click_link href: event_path(event)
       expect(page).to have_content event.name
-      expect(page).to have_content I18n.l(event.start_time, format: :long)
+      expect(page).to have_content "#{I18n.l(event.start_time, format: :long)}~#{I18n.l(event.end_time)}"
+      expect(page).to have_content event.description
     end
   end
 

@@ -6,7 +6,12 @@
       <button class="delete" id="close-events-show-<%= event.id %>-modal" aria-label="close"></button>
     </header>
     <section class="modal-card-body">
-      <%= l event.start_time, format: :long %>
+      <div class="content text-break">
+        <p>
+          <%= show_time(event.start_time, event.end_time) %>
+        </p>
+        <p><%= event.description %></p>
+      </div>
     </section>
     <footer class="modal-card-foot is-flex is-justify-content-end">
       <%= link_to '編集', edit_event_path(event), remote: true, class: 'button is-rounded is-info' %>
