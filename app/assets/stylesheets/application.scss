@@ -14,6 +14,43 @@
  *= require_self
  */
 
+@import 'simple_calendar';
+
 .navbar-border {
   border-bottom: 1px solid lightgray;
+}
+
+.modal-background {
+  background-color: rgba(10, 10, 10, 0.2) !important;
+}
+
+.text-break {
+  word-break: break-word;
+}
+
+.is-1-line {
+  overflow: hidden;
+  width: 100%;
+  span {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+}
+
+.w-95-per {
+  width: 95% !important;
+}
+
+.hover-has-background-light:hover {
+  background-color: hsl(0, 0%, 96%);
+  border-radius: 4px;
+}
+
+.today {
+  background: hsl(219, 70%, 96%) !important;
+}
+
+.prev-month, .next-month {
+  background: none !important;
 }

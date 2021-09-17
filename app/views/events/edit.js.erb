@@ -1,0 +1,36 @@
+var eventsShowModal = document.getElementById('events-show-<%= @event.id %>-modal')
+var body = document.querySelector('body');
+var html = document.querySelector('html');
+
+if (eventsShowModal) {
+  eventsShowModal.classList.remove('is-active');
+  html.classList.remove('is-clipped');
+  body.classList.remove('mr-4');
+}
+
+var eventsFormModal = document.getElementById('events-form-modal')
+if (eventsFormModal) {
+  eventsFormModal.remove();
+}
+
+body.insertAdjacentHTML('beforeend', '<%= j(render "form", event: @event) %>');
+
+var eventsFormModal = document.getElementById('events-form-modal')
+
+eventsFormModal.classList.add('is-active');
+html.classList.add('is-clipped');
+body.classList.add('mr-4');
+
+var eventsFormModalCloseButton = eventsFormModal.querySelector('#close-events-form-modal');
+eventsFormModalCloseButton.addEventListener('click', () => {
+  eventsFormModal.classList.remove('is-active');
+  html.classList.remove('is-clipped');
+  body.classList.remove('mr-4');
+});
+
+var eventsFormModalBg = eventsFormModal.querySelector('.modal-background');
+eventsFormModalBg.addEventListener('click', () => {
+  eventsFormModal.classList.remove('is-active');
+  html.classList.remove('is-clipped');
+  body.classList.remove('mr-4');
+});

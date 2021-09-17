@@ -32,6 +32,7 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'faker'
 gem 'rails-i18n'
+gem 'simple_calendar'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
