@@ -29,7 +29,7 @@ RSpec.describe 'Events', type: :system do
 
   describe 'create event' do
     let(:alice) { create :user }
-    let(:event) { build_stubbed :event, start_time: DateTime.now }
+    let(:event) { build_stubbed :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour }
 
     it 'creates event', js: true do
       sign_in alice
@@ -49,7 +49,7 @@ RSpec.describe 'Events', type: :system do
 
   describe 'update event' do
     let(:alice) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
     it 'creates event', js: true do
       old_event_name = event.name
@@ -67,7 +67,7 @@ RSpec.describe 'Events', type: :system do
 
   describe 'destroy event' do
     let(:alice) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
 
     it 'creates event', js: true do
       expect(alice.events.count).to eq 1
