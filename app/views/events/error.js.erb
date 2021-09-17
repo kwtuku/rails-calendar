@@ -2,3 +2,10 @@ var eventsFormModal = document.getElementById('events-form-modal')
 var modalCardBody = eventsFormModal.querySelector('.modal-card-body')
 
 modalCardBody.insertAdjacentHTML('afterbegin', '<%= j(render "shared/error_messages", model: @event) %>');
+
+var body = document.querySelector('body');
+var html = document.querySelector('html');
+
+eventsFormModal.classList.add('is-active');
+html.classList.add('is-clipped');
+body.classList.add('mr-4');
