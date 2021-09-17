@@ -15,9 +15,9 @@
     </div>
 
     <div class="is-flex">
-      <%= link_to '今日', events_path, class: 'button is-rounded' %>
+      <%= link_to '今日', events_path_or_root_path, class: 'button is-rounded' %>
 
-      <%= form_with url: events_path, method: :get, class: 'ml-6' do |f| %>
+      <%= form_with url: events_path_or_root_path, method: :get, class: 'ml-6' do |f| %>
         <div class="field has-addons">
           <div class="control">
             <%= f.date_field :start_date, required: true, class: 'input is-rounded' %>

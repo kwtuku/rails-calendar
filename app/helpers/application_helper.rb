@@ -32,4 +32,12 @@ module ApplicationHelper
       '保存'
     end
   end
+
+  def events_path_or_root_path
+    if user_signed_in?
+      events_path
+    else
+      root_path
+    end
+  end
 end
