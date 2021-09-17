@@ -1,0 +1,38 @@
+<%= render 'devise/shared/error_messages', resource: resource %>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title has-text-centered">アカウント削除の確認</h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-10">
+        <p class="title is-size-5 has-text-centered">一度アカウントを削除すると、<span class="has-text-danger">復元することはできません。</span></p>
+        <p class="has-text-centered">アカウントを削除するには現在のパスワードを入力してください。</p>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-5">
+        <%= form_with model: resource, url: registration_path(resource_name), method: :delete do |f| %>
+          <div class="field">
+            <%= f.label :current_password, class: 'label' %>
+            <div class="control is-expanded">
+              <%= f.password_field :current_password, autocomplete: 'current-password', required: true, maxlength: '128', class: 'input' %>
+            </div>
+          </div>
+
+          <div class="field">
+            <p class="control">
+              <%= f.submit 'アカウント削除', class: 'button is-fullwidth is-rounded is-danger' %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

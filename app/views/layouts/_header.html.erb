@@ -1,0 +1,20 @@
+<nav class="navbar is-fixed-top is-white navbar-border is-inline-flex is-justify-content-space-around" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand is-justify-content-center">
+    <%= link_to root_path, class: 'navbar-item' do %>
+      <h1 class="title is-4">Calendar</h1>
+    <% end %>
+  </div>
+
+  <div class="navbar-item is-justify-content-center">
+    <% if user_signed_in? %>
+      <%= link_to '予定一覧', events_path, class: 'button is-rounded is-white' %>
+      <%= link_to 'アカウント編集', edit_user_registration_path, class: 'button is-rounded is-white' %>
+      <%= link_to 'アカウント削除手続き', users_confirm_destroy_path, class: 'button is-rounded is-white' %>
+      <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'button is-rounded is-white' %>
+    <% else %>
+      <%= link_to 'ゲストログイン', users_guest_sign_in_path, method: :post, class: 'button is-rounded is-info' %>
+      <%= link_to 'ログイン', new_user_session_path, class: 'button is-rounded is-info is-light' %>
+      <%= link_to '新規登録', new_user_registration_path, class: 'button is-rounded is-white' %>
+    <% end %>
+  </div>
+</nav>

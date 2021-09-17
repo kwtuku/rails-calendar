@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    models:
+      event: 予定
+    attributes:
+      event:
+        name: 名前
+        start_time: 開始時刻
+  time:
+    formats:
+      default: "%-H:%M"
+      long: "%-m月%-d日(%a) %-H:%M"
+      input_value: "%Y-%m-%dT%H:%M:%S"
+  simple_calendar:
+    previous: "<"
+    next: ">"
+    week: 週
