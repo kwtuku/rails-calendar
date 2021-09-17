@@ -12,7 +12,17 @@
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-10">
-        <p class="title is-size-5 has-text-centered">一度アカウントを削除すると、<span class="has-text-danger">復元することはできません。</span></p>
+        <p class="title is-size-5 has-text-centered">一度アカウントを削除すると、以下のものが完全に削除され、<span class="has-text-danger">復元することはできません。</span></p>
+        <div class="content">
+          <article class="message">
+            <div class="message-body">
+              <ul class="mt-0">
+                <li>アカウントの情報</li>
+                <li>作成した予定</li>
+              </ul>
+            </div>
+          </article>
+        </div>
         <p class="has-text-centered">アカウントを削除するには現在のパスワードを入力してください。</p>
       </div>
     </div>
@@ -21,9 +31,18 @@
         <%= form_with model: resource, url: registration_path(resource_name), method: :delete do |f| %>
           <div class="field">
             <%= f.label :current_password, class: 'label' %>
+          </div>
+          <div class="field is-grouped js-password-area">
             <div class="control is-expanded">
-              <%= f.password_field :current_password, autocomplete: 'current-password', required: true, maxlength: '128', class: 'input' %>
+              <%= f.password_field :current_password, autocomplete: 'current-password', required: true, maxlength: '128', class: 'input border-danger-with-error' %>
             </div>
+            <p class="control js-handle-password-mask">
+              <button class="button" title="パスワードを表示する" onclick="return false;">
+                <span class="icon is-small">
+                  <i class="far fa-eye-slash"></i>
+                </span>
+              </button>
+            </p>
           </div>
 
           <div class="field">
