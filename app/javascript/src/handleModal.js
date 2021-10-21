@@ -2,9 +2,7 @@ export default () => {
   document.addEventListener('turbolinks:load', () => {
     const eventsNewModalTrigger = document.getElementById('show-events-new-modal')
 
-    if (eventsNewModalTrigger === null) {
-      return false;
-    }
+    if (eventsNewModalTrigger === null) return false;
 
     const html = document.querySelector('html');
     const body = document.querySelector('body');
@@ -20,13 +18,6 @@ export default () => {
 
       const eventsNewModalCloseButton = eventsNewModal.querySelector('#close-events-new-modal');
       eventsNewModalCloseButton.addEventListener('click', () => {
-        eventsNewModal.classList.remove('is-active');
-        html.classList.remove('is-clipped');
-        body.classList.remove('mr-4');
-      });
-
-      const eventsNewModalBg = eventsNewModal.querySelector('.modal-background');
-      eventsNewModalBg.addEventListener('click', () => {
         eventsNewModal.classList.remove('is-active');
         html.classList.remove('is-clipped');
         body.classList.remove('mr-4');
