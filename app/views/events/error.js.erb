@@ -1,5 +1,15 @@
+var errorMessage = document.getElementById('error_explanation')
+if (errorMessage) {
+  errorMessage.remove();
+}
+
 var eventsFormModal = document.getElementById('events-form-modal')
 var modalCardBody = eventsFormModal.querySelector('.modal-card-body')
+
+eventsFormModal.querySelector('#event_name').classList.remove('border-danger');
+eventsFormModal.querySelector('#event_start_time').classList.remove('border-danger');
+eventsFormModal.querySelector('#event_end_time').classList.remove('border-danger');
+eventsFormModal.querySelector('#event_description').classList.remove('border-danger');
 
 modalCardBody.insertAdjacentHTML('afterbegin', '<%= j(render "shared/error_messages", model: @event) %>');
 
