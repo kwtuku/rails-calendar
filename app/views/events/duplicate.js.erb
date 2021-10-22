@@ -33,9 +33,8 @@ eventsFormModalCloseButton.addEventListener('click', () => {
   body.classList.remove('mr-4');
 });
 
-var eventsFormModalBg = eventsFormModal.querySelector('.modal-background');
-eventsFormModalBg.addEventListener('click', () => {
-  eventsFormModal.classList.remove('is-active');
+var eventsFormSubmitButton = document.getElementById('submit-button')
+eventsFormSubmitButton.addEventListener('click', () => {
   html.classList.remove('is-clipped');
   body.classList.remove('mr-4');
 });

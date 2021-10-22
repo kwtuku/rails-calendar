@@ -21,7 +21,7 @@ RSpec.describe 'Events', type: :request do
 
     context 'signed in' do
       let(:alice) { create :user }
-      let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
+      let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 10.seconds, user: alice }
 
       it 'returns a 200 response' do
         sign_in alice
@@ -103,7 +103,7 @@ RSpec.describe 'Events', type: :request do
   describe 'GET /events/:id' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 10.seconds, user: alice }
 
     context 'not signed in' do
       it 'returns a 401 response' do
@@ -160,7 +160,7 @@ RSpec.describe 'Events', type: :request do
   describe 'GET /events/:id/edit' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 10.seconds, user: alice }
 
     context 'not signed in' do
       it 'returns a 401 response' do
@@ -228,7 +228,7 @@ RSpec.describe 'Events', type: :request do
   describe 'PUT /events/:id' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 10.seconds, user: alice }
 
     context 'not signed in' do
       it 'returns a 401 response' do
@@ -340,7 +340,7 @@ RSpec.describe 'Events', type: :request do
   describe 'DELETE /events/:id' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 10.seconds, user: alice }
 
     context 'not signed in' do
       it 'returns a 302 response' do
@@ -416,7 +416,7 @@ RSpec.describe 'Events', type: :request do
   describe 'GET /events/:id/duplicate' do
     let(:alice) { create :user }
     let(:bob) { create :user }
-    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 1.hour, user: alice }
+    let!(:event) { create :event, start_time: DateTime.now, end_time: DateTime.now + 10.seconds, user: alice }
 
     context 'not signed in' do
       it 'returns a 401 response' do
